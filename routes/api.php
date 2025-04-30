@@ -31,14 +31,8 @@ RateLimiter::for('api', function (Request $request) {
     return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/profile', function (Request $request) {
-        return $request->user();
-    });
-});
-
 Route::post('/logout', function (Request $request) {
-    $request->user()->currentAccessToken()->delete(); // revoke only current token
+    $request->user()->currentAccessToken()->delete(); 
     return response()->json(['message' => 'Logged out from current session']);
 })->middleware('auth:sanctum');
 
